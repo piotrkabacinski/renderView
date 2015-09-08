@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Piotr Kabacinski
+ */
+
 namespace view;
 
 class renderView {
@@ -19,6 +23,8 @@ class renderView {
 		self::renderVars();
 
 		echo self::$template;
+
+		return;
 
 	}
 

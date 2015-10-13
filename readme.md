@@ -46,4 +46,6 @@ $array = array(
 ```
 Be aware that loops within loops can cause some problems for now. Keep it in mind while programming your model.
 
+## Licence
 
+MIT

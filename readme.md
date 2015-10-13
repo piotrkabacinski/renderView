@@ -8,7 +8,9 @@ renderView's class constructor requires two parameters:
 * path to view's template 
 * content array
 
-` \view\renderView::render( "views/template.html" , array( "name" => "world" ) ); `
+```php
+\view\renderView::render( "views/template.html" , array( "name" => "world" ) );
+```
 
 Variables in template are expressed within `{{}}` brackets. Their content indicates specific element in array:
 

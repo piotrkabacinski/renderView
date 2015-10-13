@@ -4,7 +4,7 @@ renderView static class is a little helper for bringing MVC feeling into small p
 
 ## Usage
 
-renderView's class constructor requires two parameters: 
+renderView class constructor requires two parameters: 
 * path to view's template 
 * content array
 
@@ -26,7 +26,7 @@ This example will return:
 ```html
 <h1> Hello World! </h1>
 ```
-For listings or repeating elements you can use loop: `{{loop:LoopName}} ... {{/loop:LoopName}}`. For instance:
+For listings or repeating elements you can use loop: `{{loop:LoopName}} ... {{/loop:LoopName}}`.
 
 ```html
 <ul>

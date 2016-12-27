@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>{{title}}</title>
 
 	<style>
-		body { margin: 5px; font-family: Arial; font-size: 12px; }
-		div { padding: 5px 0px 5px 0px; }
-		td { padding: 3px; }
-		#head { font-weight: bold; }
+		body {
+			margin: 5px;
+			font-family: Arial;
+			font-size: 12px;
+		}
+
+		div {
+			padding: 5px 0px 5px 0px;
+		}
+
+		td {
+			padding: 3px;
+		}
+
+		thead {
+			font-weight: bold;
+		}
 	</style>
 
 </head>
+
 <body>
 
 	<h1>{{headline}}</h1>
@@ -23,31 +38,36 @@
 
 	<table border='1'>
 
-		<tr id="head">
-			<td>Date</td>
-			<td>City</td>
-			<td>Temperature</td>
-		</tr>
+		<thead>
+			<tr>
+				<td>Date</td>
+				<td>City</td>
+				<td>Temperature</td>
+			</tr>
+		</thead>
 
-		{{loop:temperatures}}
+		<tbody>
+			{{loop:temperatures}}
 			<tr>
 				<td>{{date}}</td>
 				<td>{{city}}</td>
 				<td>{{temperature}}</td>
 			</tr>
-		{{/loop:temperatures}}
+			{{/loop:temperatures}}
+		</tbody>
 
 	</table>
 
 	<div>
 		Type of rains:
-	</div>	
+	</div>
 
 	<ul>
 		{{loop:rains}}
-			<li>{{type}}</li>
+		<li>{{type}}</li>
 		{{/loop:rains}}
 	</ul>
-	
+
 </body>
+
 </html>

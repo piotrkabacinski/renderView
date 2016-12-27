@@ -16,15 +16,13 @@ class renderView {
 		$template = file_get_contents( $template );
 
 		self::$template = $template;
-		self::$data = $data;		
+		self::$data = $data;
 
-		// init render functions
 		self::renderLoops();
 		self::renderVars();
+		self::cleanTemplate();
 
-		echo self::$template;
-
-		return;
+		return self::$template;
 
 	}
 
@@ -33,72 +31,65 @@ class renderView {
 		$template = self::$template;
 		$data = self::$data;
 
-		// replace white spaces in template for better rendering
-		$template = str_replace( array("\n" ,"\r") ,  array("[[n]]" , "[[r]]") , $template);
-
-		// catch loops names
-	    preg_match_all("/{{loop:(.*)}}/U", $template, $loops_array);
+			// Catch loops names
+	    preg_match_all("/{{loop:(.*)}}/", $template, $loops_array);
 
 	    $catch = $loops_array[1];
-	    
+
 	    for( $i = 0; $i < count( $catch ); $i++ ) {
-	        
-	        // get specific loop content
-	        preg_match_all("/{{loop:".$catch[$i]."}}(.*){{\\/loop:".$catch[$i]."}}/U", $template, $content_array);
+
+	        // Get specific loop content
+	        preg_match_all("/{{loop:".$catch[$i]."}}(.*){{\\/loop:".$catch[$i]."}}/s", $template, $content_array);
 
 	        $content = $content_array[1][0];
 
-	        // get vars within loop
-	        preg_match_all("/{{(.*)}}/U", $content , $vars);
-	        
+	        // Get vars within loop
+	        preg_match_all("/{{(.*)}}/", $content , $vars);
+
 	        $loop = $content;
 
-	        // check if content array for specific loop exists
+	        // Check if content array for specific loop exists
 	        if ( array_key_exists( $catch[$i] , $data) ) {
 
 	        	$sourceArray = $data[ $catch[$i] ];
 
 		        $return = "";
 		        $append = $loop;
-		        
+
 		        for( $r = 0; $r < count( $sourceArray ); $r++ ) {
-		            
+
 		            $append = $loop;
-		            
+
 		            for( $v = 0; $v < count( $sourceArray[$r] ); $v++ ) {
-		                
+
 		                $local = $vars[1][$v];
 		                $value = $sourceArray[$r][$local];
 
 		                $append = str_replace( "{{".$local."}}" , $value , $append );
-		                
+
 		                unset( $value );
 		                unset( $local );
-		 
+
 		            }
-		            
+
 		            $return = $return . $append;
 
 		        }
-		        
-		        // replace loop object with rendered content
+
+		        // Replace loop object with rendered content
 		        $template = str_replace( "{{loop:".$catch[$i]."}}" . $loop . "{{/loop:".$catch[$i]."}}" , $return , $template );
 
-		    
+
 	        } else {
 
-	        	// remove loop object from final code
-	        	$template = preg_replace("/{{loop:".$catch[$i]."}}" . $loop . "{{\\/loop:".$catch[$i]."}}/U", "", $template);
+	        	// Remove loop object from final code
+	        	$template = preg_replace("/{{loop:".$catch[$i]."}}" . $loop . "{{\\/loop:".$catch[$i]."}}/", "", $template);
 
 	        }
-	        
+
 	    }
 
-	    $template = str_replace( array("[[n]]" , "[[r]]") , array("\n" ,"\r")  , $template);
-	    
 	    self::$template = $template;
-
-	    return;
 
 	}
 
@@ -107,7 +98,7 @@ class renderView {
 		$template = self::$template;
 		$data = self::$data;
 
-		preg_match_all("/{{(.*)}}/U", $template , $output_array);
+		preg_match_all("/{{(.*)}}/", $template , $output_array);
 
 		$vars = $output_array[1];
 
@@ -121,12 +112,18 @@ class renderView {
 
 	    }
 
-	    // remove empty variables from template
-	    $template = preg_replace('/{{(.*)}}/U' , '', $template);
-
 	    self::$template = $template;
 
-	    return;
+	}
+
+	// Remove empty indications from template
+	static function cleanTemplate() {
+
+		$template = self::$template;
+
+		$template = preg_replace('/{{(.*)}}/' , '', $template);
+
+		self::$template = $template;
 
 	}
 

@@ -4,15 +4,15 @@ renderView static class is a little helper for bringing MVC feeling into small p
 
 ## Usage
 
-renderView class constructor requires two parameters: 
-* path to view's template 
+renderView class constructor requires two parameters:
+* path to view's template
 * content array
 
 ```php
-\view\renderView::render( "views/template.html" , array( "name" => "world" ) );
+echo \view\renderView::render( "views/template.html" , array( "name" => "world" ) );
 ```
 
-Variables in template are expressed within `{{}}` brackets. Their content indicates specific element in array:
+Variables in template are expressed within mustache `{{}}` tags. Their content indicates specific element in array:
 
 ```html
 <h1> Hello {{name}}! </h1>
@@ -36,7 +36,7 @@ For listings or repeating elements you can use loop: `{{loop:LoopName}} ... {{/l
 </ul>
 ```
 ```php
-$array = array( 
+$array = array(
           "names" => array(
           		array( "name" => "John" , "age" => 25 ),
           		array( "name" => "Billy" , "age" => 20 ),

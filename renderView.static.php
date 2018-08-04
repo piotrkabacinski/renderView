@@ -38,8 +38,6 @@ class RenderView {
 	        // Get specific loop content
 			preg_match_all("/{{loop:{$catch[$i]}}}(.*){{\\/loop:{$catch[$i]}}}/s", $template, $content_array);
 
-
-
 	        $content = $content_array[1][0];
 
 	        // Get vars within loop
@@ -87,7 +85,6 @@ class RenderView {
 		$template = self::$template;
 		$data = self::$data;
 
-		// preg_match_all("/{{(.*)}}/", $template , $output_array);
 		preg_match_all("/{{(\s*[\w\.]+\s*)}}/", $template, $output_array);
 
 		$vars = $output_array[1];
@@ -103,7 +100,7 @@ class RenderView {
 
 	static function clearTemplate() {
 		$template = self::$template;
-		$template = preg_replace('/{{(.*)}}/' , '', $template);
+		$template = preg_replace('/{{(\s*[\w\.]+\s*)}}/' , '', $template);
 		self::$template = $template;
 	}
 }
